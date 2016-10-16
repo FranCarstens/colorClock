@@ -1,0 +1,286 @@
+/*CSS RESET*/
+@import url("reset.css");
+/*DOT MATRIX FONT*/
+@import url("http://ilearncode.com/webfonts/scoreboard/scoreboard_font.css");
+/*ROBOTO THIN*/
+@import url('https://fonts.googleapis.com/css?family=Roboto:100');
+
+/* BASE STYLES */
+* {
+	transition: transform .3s ease-in-out, width .3s ease, color .3s ease-in-out;
+}
+body {
+	background: #000;
+}
+#display {
+	width: 32rem;
+	height: 110px;
+	padding: 1rem 2rem;
+	position: absolute;
+	top:0;
+	left:0;
+	bottom:0;
+	right:0;
+	margin:auto
+}
+#clock, #color {
+	font-family: Arial;
+	font-size: 6rem;
+	position: absolute;
+	cursor: crosshair
+}
+.time, .hex, .divider {
+	text-align: center;
+	float: left;
+	width: 4rem;
+	color: #FFF
+}
+#radial_gradient, #day_night {
+	background-image: radial-gradient(#000,#000);
+	height: 100vh;
+	width: 100vw
+}
+
+#styleswitcher {
+	position: fixed;
+	bottom: 1rem;
+	right: 1rem
+}
+#styleswitcher li {
+	display:inline-block
+}
+#styleswitcher button {
+	height: 2rem;
+	width: 2rem;
+	border-radius: 50%;
+	background-color: black;
+	border: none;
+	cursor: pointer;
+	overflow: hidden;
+	line-height: 2rem;
+	padding:0;
+	margin: 0.2rem;
+	box-shadow: 0 0 2px #000
+}
+#styleswitcher button:hover {
+	background-color: #2F2F2F;
+}
+#styleswitcher button span {
+	width: 2rem;
+	font-size: 1rem
+}
+#styleswitcher button span:before {
+	color: #FFF
+}
+
+
+
+
+
+/*SPAN DELAYS*/
+.u1 { transition-delay: 0s }
+.u2 { transition-delay: 0.15s }
+.u3 { transition-delay: 0.3s }
+.u4 { transition-delay: 0.45s }
+.u5 { transition-delay: 0.6s }
+.u6 { transition-delay: 0.75s }
+
+
+/* RADIAL STYLES */
+
+.radial #day_night {
+	display:none;
+}
+
+.radial #clock, .radial #color {
+	font-family: "Score Board", Arial;
+}
+
+.radial .time {
+	color: rgba(255,255,255,1);
+	transform: rotateX(0deg)
+}
+.radial .hex {
+	color: rgba(255,255,255,0.1);
+	transform: rotateX(90deg)
+}
+
+.radial #display:hover .time {
+	color: rgba(255,255,255,0.1);
+	transform: rotateX(90deg)
+}
+.radial #display:hover .hex {
+	color: rgba(255,255,255,1);
+	transform: rotateX(0deg)
+}
+
+.radial #minute_line {
+	position: fixed;
+	top: 0;
+	margin-left: 50%;
+	transform: translateX(-50%);
+	background: rgb(255,255,255);
+	height: 2px;
+	width: 50%;
+}
+
+/* AIRPORT STYLES */
+
+body.airport {
+	background-color: #161616;
+	background-image: url('../images/dark-leather.png');
+}
+
+.airport #display {
+	width: 44rem;
+	border-radius: 5px;
+	box-shadow: inset 0 0 5px 1px rgba(10,10,10,0.6);
+	background-image: linear-gradient(rgba(35,35,35,.5), rgba(45,45,45,.5) 70%, rgba(65,65,65,.5));
+	border: 1px solid #222;
+	border-top: 1px solid #151515;
+	border-bottom: 1px solid #252525;
+}
+.airport #clock, .airport #color {
+	font-family: Roboto, Arial, Sans-Serif;
+	font-weight: 100;
+	text-transform: uppercase
+}
+.airport #radial_gradient {
+	opacity: 0;
+}
+.airport #day_night {
+	display: none;
+}
+.airport .time {
+	color: rgba(255,255,255,1);
+	transform: rotateX(0deg);
+	position: relative;
+}
+.airport .hex {
+	color: rgba(255,255,255,1);
+	transform: rotateX(90deg)
+}
+.airport .time:after, .airport .hex:after {
+	content: "";
+	border-top: 2px solid #151515;
+	border-bottom: 2px solid #252525;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	position: absolute
+}
+.airport .time, .airport .hex, .airport .divider {
+	text-align: center;
+	float: left;
+	width: 4rem;
+	margin: 0 .25rem;
+	padding: 0 .5rem;
+	color: #FFF
+}
+.airport span.time, .airport span.hex {
+	background-color: #373737;
+	border-radius: 5px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.75);
+	background-image: linear-gradient(#222, #000 60%, #111);
+	border: 1px solid #222;
+	border-top: 1px solid #252525;
+	border-bottom: 1px solid #151515;
+}
+.airport #display:hover .time {
+	color: rgba(255,255,255,1);
+	transform: rotateX(0deg);
+}
+.airport #display:hover .hex {
+	color: rgba(255,255,255,1);
+	transform: rotateX(0deg)
+}
+
+.airport #minute_line {
+	position: fixed;
+	top: 0;
+	margin-left: 50%;
+	transform: translateX(-50%);
+	background: rgb(255,255,255);
+	height: 2px;
+	width: 50%;
+}
+/*SPAN DELAYS*/
+.airport #display:not(:hover) #clock .u1 { transition-delay: 0.3s }
+.airport #display:not(:hover) #clock .u2 { transition-delay: 0.45s }
+.airport #display:not(:hover) #clock .u3 { transition-delay: 0.6s }
+.airport #display:not(:hover) #clock .u4 { transition-delay: 0.75s }
+.airport #display:not(:hover) #clock .u5 { transition-delay: 0.9s }
+.airport #display:not(:hover) #clock .u6 { transition-delay: 1.05s }
+
+.airport #display:hover #color .u1 { transition-delay: 0.3s }
+.airport #display:hover #color .u2 { transition-delay: 0.45s }
+.airport #display:hover #color .u3 { transition-delay: 0.6s }
+.airport #display:hover #color .u4 { transition-delay: 0.75s }
+.airport #display:hover #color .u5 { transition-delay: 0.9s }
+.airport #display:hover #color .u6 { transition-delay: 1.05s }
+
+
+/* DAY/NIGHT STYLES */
+
+
+.daynight #radial_gradient {
+	display: none;
+}
+
+.daynight #clock, .daynight #color {
+	font-family: Roboto, Arial;
+	font-weight: 100;
+	text-transform: uppercase;
+}
+
+.daynight .time {
+	color: rgba(255,255,255,1);
+
+}
+.daynight .hex {
+	color: rgba(255,255,255,0.1);
+	
+}
+
+.daynight #display:hover .time {
+	color: rgba(255,255,255,0.1);
+	
+}
+.daynight #display:hover .hex {
+	color: rgba(255,255,255,1);
+	
+}
+
+.daynight #minute_line {
+	position: fixed;
+	top: 0;
+	margin-left: 50%;
+	transform: translateX(-50%);
+	background: rgb(255,255,255);
+	height: 2px;
+	width: 50%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,9 +3,42 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="styles/style.css">
-	<script type="text/javascript" src="scripts/script.js"></script>
+	<link rel="stylesheet" type="text/css" href="fonts/icons/css/fontello.css">
+	
 </head>
-<body>
-
+<body class="radial">
+	<div id="radial_gradient"></div>
+	<div id="day_night"></div>
+	<div id="minute_line"></div>
+	<div id="display">
+		<div id="clock">
+			<span class="u1 time"></span>
+			<span class="u2 time"></span>
+			<span class="divider"></span>
+			<span class="u3 time"></span>
+			<span class="u4 time"></span>
+			<span class="divider"></span>
+			<span class="u5 time"></span>
+			<span class="u6 time"></span>
+		</div>
+		<div id="color">
+			<span class="u1 hex"></span>
+			<span class="u2 hex"></span>
+			<span class="divider"></span>
+			<span class="u3 hex"></span>
+			<span class="u4 hex"></span>
+			<span class="divider"></span>
+			<span class="u5 hex"></span>
+			<span class="u6 hex"></span>
+		</div>
+	</div>
+	<div id="styleswitcher">
+		<ul>
+			<li><button id="radial_btn"><span class="icon-infinity">Radial</span></button></li>
+			<li><button id="airport_btn"><span class="icon-plane">Airport</span></button></li>
+			<li><button id="daynight_btn"><span class="icon-sun-1">Day/Night</span></button></li>
+		</ul>
+	</div>
 </body>
+<script type="text/javascript" src="scripts/script.js"></script>
 </html>

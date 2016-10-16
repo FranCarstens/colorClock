@@ -1,0 +1,28 @@
+{
+  "name": "",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "ivmsk67zo1yb1tthd3ugi4xnb3get418",
+      "css": "sun-1",
+      "code": 59393,
+      "src": "typicons"
+    },
+    {
+      "uid": "3dae5d2af2b99240c3c118e872f762f2",
+      "css": "plane",
+      "code": 59392,
+      "src": "typicons"
+    },
+    {
+      "uid": "2039c86dq3jtfwqmgow2quvuzq3k34bu",
+      "css": "infinity",
+      "code": 59394,
+      "src": "typicons"
+    }
+  ]
+}
