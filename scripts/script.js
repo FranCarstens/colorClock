@@ -20,6 +20,8 @@
 //     * sec char 2 to span .class.u6
 // * Each second grow #minute_line width and increase opacity by (100%/60) - 1.67% 
 
+
+// CLOCK FUNCTIONS
 var     clockContainer = document.querySelector('#clock'),
         colorContainer = document.querySelector('#color'),
         radialContainer = document.querySelector('#radial_gradient'),
@@ -35,30 +37,30 @@ var now = function() {
     return currentTime
 }
 
-var getTime = function() {
-    var thisTime = now()
+var getTime = function(time) {
+    var thisTime = time
     var hours = ( ("0" + thisTime.getHours()).slice(-2) ).split(""),
         mins = ( ("0" + thisTime.getMinutes()).slice(-2) ).split(""),
         secs = ( ("0" + thisTime.getSeconds()).slice(-2) ).split("")
     return (timeArray = hours.concat(":",mins,":",secs))
 }
-var getColor = function() {
-    var thisColor = now()
+var getColor = function(time) {
+    var thisColor = time
     var red =   ( ("0" + (thisColor.getHours().toString(16))  ).slice(-2)).split(""),
         green = ( ("0" + (thisColor.getMinutes().toString(16)) ) .slice(-2)).split(""),
         blue =  ( ("0" + (thisColor.getSeconds().toString(16))  ).slice(-2)).split("")
     
     return (colorArray = red.concat(":",green,":",blue))
 }
-var getHEX = function() {
-    var hexColor = now()
+var getHEX = function(time) {
+    var hexColor = time
     var red =   ("0" + ( (hexColor.getHours()*10 ).toString(16))  ).slice(-2),
         green = ("0" + ( (hexColor.getMinutes()*4 ).toString(16)) ) .slice(-2)
         blue =  ("0" + ( (hexColor.getSeconds()*4 ).toString(16))  ).slice(-2)
     return (hexValue = red + green + blue)
 }
-var getHEXL = function() {
-    var hexColor = now()
+var getHEXL = function(time) {
+    var hexColor = time
     var red =   ("0" + ( (60+hexColor.getHours()*10 ).toString(16))  ).slice(-2),
         green = ("0" + ( (60+hexColor.getMinutes()*4 ).toString(16)) ) .slice(-2)
         blue =  ("0" + ( (60+hexColor.getSeconds()*4 ).toString(16))  ).slice(-2)
@@ -67,12 +69,12 @@ var getHEXL = function() {
 }
 
 var getTimeColorObject = function() {
-    // var thisTime = new Date()
+    var thisTime = now()
     timeColorObject = {
-        time: getTime(),
-        color: getColor(),
-        hex: getHEX(),
-        hexComp: getHEXL()
+        time: getTime(thisTime),
+        color: getColor(thisTime),
+        hex: getHEX(thisTime),
+        hexComp: getHEXL(thisTime)
     }
     return(timeColorObject)
 }
@@ -108,28 +110,56 @@ var writeBackground = function() {
     radialContainer.style.backgroundImage = 'radial-gradient(circle,#' + thisHEXL + ',#' + thisHEX + ')'
 }
 
+// DAYNIGHT FUNCTION
+
+var sunIcon = document.querySelector("#sun"),
+    moonIcon = document.querySelector("#moon")
+
+var calcCurrentSeconds = function() {
+    // 12 hours = 43200 and 24 hours = 86400
+    // 6am = 15600
+    // 6pm = 64800
+    // maxTime 86399 (at 23:59:59) (sun 50% -90%, moon 50% 90%)
+    // travel bottom 0 to 90% and back (circle to -90% over 24 hours)
+    // travel right to left 0 to 100%
+    var currentTime = now()
+    var hours = currentTime.getHours()*3600,
+        mins = currentTime.getMinutes()*60,
+        secs = currentTime.getSeconds(),
+        totalSeconds = hours + mins + secs
+    return totalSeconds
+}
+
+var calcSunPosition = function() {
+    var sunTime = calcCurrentSeconds(),
+        bottomPos = 0,
+        leftPos = 0
+        console.log(sunTime)
+    if ( 43200 >= sunTime && sunTime >= 0) { 
+        bottomPos = (-(43200/2) + sunTime)
+    }
+    else {
+        bottomPos = (43200/2-(sunTime-43200))
+        console.log(bottomPos)
+    }
+}
+
+setInterval(calcSunPosition,1000)
+
+
+// START CLOCKS
+
 var runClock = function() {
     writeTime()
     writeColor()
     writeBackground()
+
 }
 
 setInterval(runClock,1000)
-// setInterval(moveMinuteLine,100)
+setInterval(moveMinuteLine,100)
 
 // STYLES SWITCHER
-
-// var switchStyle = function () {
-//     var radialBtn = document.querySelector('#radial_btn'),
-//         airportBtn = document.querySelector('#airport_btn'),
-//         dayNightBtn = document.querySelector('#daynight_btn')
-//     radialBtn.addEventListener("click", switchClass("radial"))
-//     console.log(radialBtn)
-//     airportBtn.addEventListener("click", switchClass("airport"))
-//     console.log(airportBtn)
-//     dayNightBtn.addEventListener("click", switchClass("daynight"))
-//     console.log(dayNightBtn)
-// }
 
 document.querySelector("#radial_btn").addEventListener('click',function(){
     docBody = document.querySelector('body')
@@ -143,32 +173,3 @@ document.querySelector("#daynight_btn").addEventListener('click',function(){
     docBody = document.querySelector('body')
     docBody.className = "daynight"
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

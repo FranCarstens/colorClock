@@ -36,10 +36,14 @@ body {
 	color: #FFF
 }
 #radial_gradient, #day_night {
-	background-image: radial-gradient(#000,#000);
+	background-image: none;
 	height: 100vh;
 	width: 100vw
 }
+#sun, #moon {
+	display: none;
+}
+
 
 #styleswitcher {
 	position: fixed;
@@ -260,7 +264,21 @@ body.airport {
 	height: 2px;
 	width: 50%;
 }
-
+.daynight #sun, .daynight #moon {
+	display:block;
+	position: fixed;
+	font-size: 5rem;
+}
+#sun {
+	color: white;
+	top: 0;
+	left: 0;
+}
+#moon {
+	color: white;
+	top: 0;
+	right: 0;
+}
 
 
 
