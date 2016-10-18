@@ -10,7 +10,7 @@
 	transition: transform .3s ease-in-out, width .3s ease, color .3s ease-in-out;
 }
 body {
-	background: #000;
+	/*background: #000;*/
 }
 #display {
 	width: 32rem;
@@ -35,8 +35,11 @@ body {
 	width: 4rem;
 	color: #FFF
 }
-#radial_gradient, #day_night {
+#radial_gradient, #night, #day_night {
 	background-image: none;
+	position:absolute;
+	top:0;
+	left:0;
 	height: 100vh;
 	width: 100vw
 }
@@ -76,6 +79,9 @@ body {
 #styleswitcher button span:before {
 	color: #FFF
 }
+.radial #radial_btn {background-color: #2F2F2F;}
+.airport #airport_btn {background-color: #2F2F2F;}
+.daynight #daynight_btn {background-color: #2F2F2F;}
 
 
 
@@ -227,8 +233,23 @@ body.airport {
 /* DAY/NIGHT STYLES */
 
 
+body.daynight {
+	/*background-image: linear-gradient(rgba(0,0,0,1) 40%,rgba(0,50,91,1) 80%,rgba(160,140,90,1));*/
+	background-image: url("../images/milky.jpg");
+	background-size: cover;
+	
+}
 .daynight #radial_gradient {
 	display: none;
+}
+.daynight #night {
+	background-image: linear-gradient(rgba(53, 109, 204, 1),rgba(80, 121, 189, 1), rgba(129, 160, 212, 1), rgba(255,255,255,1))
+}
+.daynight #day_night {
+	background-image: url("../images/trees.png");
+	background-size: cover;
+	background-position: 50% 60%;
+	
 }
 
 .daynight #clock, .daynight #color {
@@ -269,15 +290,24 @@ body.airport {
 	position: fixed;
 	font-size: 5rem;
 }
+#night, #sun, #moon {
+	z-index: -1;
+}
+
 #sun {
 	color: white;
-	top: 0;
+	bottom: 0;
 	left: 0;
+	transform: translate(-50%);
 }
 #moon {
 	color: white;
-	top: 0;
-	right: 0;
+	bottom: 0;
+	left: 0;
+	transform: translate(-50%);
+}
+.icon-moon:before, .icon-sun-1:before {
+	text-shadow: 0 0 20px #FFF;
 }
 
 

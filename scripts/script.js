@@ -25,7 +25,8 @@
 var     clockContainer = document.querySelector('#clock'),
         colorContainer = document.querySelector('#color'),
         radialContainer = document.querySelector('#radial_gradient'),
-        daynightContainer = document.querySelector('#day_night'),
+        nightContainer = document.querySelector('#night'),
+        dayContainer = document.querySelector('#day_night'),
         minuteLine =  document.querySelector('#minute_line')
 
 var leadingZeros = function() {
@@ -120,6 +121,7 @@ var calcCurrentSeconds = function() {
     // 6am = 15600
     // 6pm = 64800
     // maxTime 86399 (at 23:59:59) (sun 50% -90%, moon 50% 90%)
+    // 21600 = 100%
     // travel bottom 0 to 90% and back (circle to -90% over 24 hours)
     // travel right to left 0 to 100%
     var currentTime = now()
@@ -134,17 +136,101 @@ var calcSunPosition = function() {
     var sunTime = calcCurrentSeconds(),
         bottomPos = 0,
         leftPos = 0
-        console.log(sunTime)
+    // Midnight to Noon
     if ( 43200 >= sunTime && sunTime >= 0) { 
-        bottomPos = (-(43200/2) + sunTime)
+        bottomPos = ((-21600 + sunTime)/21600)*100*.8 + "%"
+        if ( sunTime < 21600 ) {
+            leftPos = ((sunTime+21600)/43200)*100 + "%"
+        }
+        else {
+            leftPos = (2 - ((sunTime+21600)/43200))*100 + "%"
+        }
     }
+    // Noon to Midnight
     else {
-        bottomPos = (43200/2-(sunTime-43200))
-        console.log(bottomPos)
+        bottomPos = ((21600-(sunTime-43200))/21600)*100*.8 + "%"
+        if ( sunTime < 64800 ) {
+            leftPos = (2 - ((sunTime+21600)/43200))*100 + "%"
+        }
+        else {
+            leftPos = ((64800-sunTime)*-1)/43200*100 + "%"
+        }
     }
+    return [bottomPos,leftPos]
+}
+var calcMoonPosition = function() {
+    var moonTime = calcCurrentSeconds(),
+        bottomPos = 0,
+        leftPos = 0
+    // Midnight to Noon
+    if ( 43200 >= moonTime && moonTime >= 0) {
+        bottomPos = ((21600 - moonTime)/21600)*100*.8 + "%"
+        if ( moonTime < 21600 ) {
+            leftPos = 100 - ((moonTime+21600)/43200)*100 + "%"
+        }
+        else {
+            leftPos = -100 + (2 - ((moonTime+21600)/43200))*100 + "%"
+        }
+    }
+    // Noon to Midnight
+    else {
+        bottomPos = ((-21600+(moonTime-43200))/21600)*100*.8 + "%"
+        if ( moonTime < 64800 ) {
+            leftPos = 100 - (2 - ((moonTime+21600)/43200))*100 + "%"
+        }
+        else {
+            leftPos = 100 - ((64800-moonTime)*-1)/43200*100 + "%"
+        }
+    }
+    return [bottomPos,leftPos]
 }
 
-setInterval(calcSunPosition,1000)
+var calcAstroBackground = function() {
+    var dayTime = calcCurrentSeconds(),
+        opacity = 0
+    
+    // Sunrise
+    if ( 19800 <= dayTime && dayTime <= 23400 ) {
+        opacity = (dayTime - 19800)/3600
+        console.log("sunrise",dayTime,opacity)
+    }
+    // Sunset
+    else if (63000 <= dayTime && dayTime <= 66600 ) {
+        opacity = 1 - ((dayTime - 63000)/3600)
+        console.log("sunset",dayTime,opacity)
+    }
+    // Day
+    else if ( 23400 < dayTime && dayTime < 63000) {
+        opacity = 1
+        console.log("day",dayTime,opacity)
+    }
+    // Night    
+    else if ( dayTime < 19800 || dayTime > 66600 ) {
+        opacity = 0
+        console.log("night",dayTime,opacity)
+    }
+    else opacity = NaN
+    
+    return opacity
+
+    
+}
+
+var setAstroPosition = function() {
+    var sunPosition = calcSunPosition()
+    var moonPosition = calcMoonPosition()
+    var dayOpacity = calcAstroBackground()
+    sunIcon.style.bottom = sunPosition[0]
+    sunIcon.style.left = sunPosition[1]
+
+    moonIcon.style.bottom = moonPosition[0]
+    moonIcon.style.left = moonPosition[1]
+    nightContainer.style.backgroundImage = 'linear-gradient(rgba(53, 109, 204,' + dayOpacity + '),rgba(80, 121, 189,' + dayOpacity + '), rgba(129, 160, 212,' + dayOpacity + '), rgba(255,255,255,' + dayOpacity + '))'
+}
+
+
+
+
 
 
 // START CLOCKS
@@ -156,6 +242,7 @@ var runClock = function() {
 
 }
 
+setInterval(setAstroPosition,1000)
 setInterval(runClock,1000)
 setInterval(moveMinuteLine,100)
 
