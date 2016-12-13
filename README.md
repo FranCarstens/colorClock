@@ -11,3 +11,6 @@ Designed and developed by myself. Enjoy!
 Live Preview: https://francarstens.github.io/colorClock/
 
 This project was developed with HTML, CSS, and JavaScript.
+
+##License
+[MIT License](https://opensource.org/licenses/MIT)
